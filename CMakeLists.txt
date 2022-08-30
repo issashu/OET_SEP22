@@ -15,4 +15,6 @@ add_executable(Ocado_tech
         cpp/utils/Image.h
         cpp/utils/SolutionEvaluator.h
         cpp/main.cpp
-        cpp/Solution.h)
+        cpp/Solution.h
+        cpp/RedEyeRemover/src/PatternExtractor.cpp
+        cpp/RedEyeRemover/includes/PatternExtractor.h cpp/RedEyeRemover/src/pixelCanvas.cpp cpp/RedEyeRemover/includes/pixelCanvas.h)
