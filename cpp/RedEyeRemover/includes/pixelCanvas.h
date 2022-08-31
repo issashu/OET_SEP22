@@ -8,9 +8,8 @@
 #include <cstdint>
 
 class pixelCanvas {
-//TODO Make private and getters
 private:
-    //Simple C-style array of strings, since we don't modify its size
+    //Simple C-style array of strings, since we don't modify its size and not needed all vector func.
     char **Canvas;
     int32_t canvasWidth;
     int32_t canvasHeight;
@@ -18,12 +17,20 @@ private:
 public:
     pixelCanvas() = delete;
     pixelCanvas(int32_t width, int32_t height);
+
+    pixelCanvas(const pixelCanvas& other);
+    pixelCanvas& operator=(pixelCanvas const& other);
+
+    pixelCanvas(pixelCanvas&& other) noexcept ;
+    pixelCanvas& operator=(pixelCanvas&& other) noexcept ;
     ~pixelCanvas();
-    [[nodiscard]] char** getCanvas() const;
+
+    char** getCanvas() const;
     int32_t getCanvasHeight() const;
     int32_t getCanvasWidth() const;
     void setCanvasElem(int32_t row, int32_t col, char element);
     char getCavnasElement(int32_t row, int32_t col) const;
+    void clearCanvas();
     void printCanvas();
 };
 

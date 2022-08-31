@@ -5,25 +5,53 @@
 #include "RedEyeRemover/includes/pixelCanvas.h"
 #include <iostream>
 //TODO Remove debug prints
+//TODO Redo the canvas as one contigeous block of memory rather then point to point (see screenshot on desktop)
+/*######### Constructors and Destructor ########*/
 pixelCanvas::pixelCanvas(int32_t width, int32_t height) : canvasWidth(width), canvasHeight(height) {
     Canvas = new char *[canvasHeight];
 
     for (int i = 0; i < canvasHeight; i++) {
         Canvas[i] = new char[canvasWidth];
     }
-    std::cout<<"Created canvas"<<std::endl;
+    std::cout << "Created canvas" << std::endl;
 }
 
 pixelCanvas::~pixelCanvas() {
     for (int i = 0; i < canvasHeight; i++) {
         delete[] Canvas[i];
     }
-
     delete[] Canvas;
-    std::cout<<"Destroyed Canvas!"<<std::endl;
+    Canvas = nullptr;
+    canvasHeight = 0;
+    canvasWidth =0;
+    std::cout << "Destroyed Canvas!" << std::endl;
 }
 
-/*######### Other methods ###########*/
+pixelCanvas::pixelCanvas(const pixelCanvas &other) {
+    this->canvasWidth = other.canvasWidth;
+    this->canvasHeight = other.canvasHeight;
+
+    Canvas = new char *[canvasHeight];
+    for (int i = 0; i < canvasHeight; i++) {
+        Canvas[i] = new char[canvasWidth];
+    }
+
+    for (int i = 0; i < canvasHeight; i++) {
+        this->Canvas[i] = other.Canvas[i];
+    }
+}
+
+pixelCanvas::pixelCanvas(pixelCanvas &&other)  noexcept {
+    this->canvasHeight = other.canvasHeight;
+    this->canvasWidth = other.canvasWidth;
+    this->Canvas = other.Canvas;
+
+    other.canvasHeight = 0;
+    other.canvasWidth = 0;
+    other.Canvas = nullptr;
+}
+
+/*######### Other methods ####################*/
 char **pixelCanvas::getCanvas() const {
     return Canvas;
 }
@@ -45,11 +73,54 @@ char pixelCanvas::getCavnasElement(int32_t row, int32_t col) const {
 }
 
 void pixelCanvas::printCanvas() {
-    for(int i = 0; i < canvasHeight; i++) {
+    for (int i = 0; i < canvasHeight; i++) {
         for (int j = 0; j < canvasWidth; j++) {
             std::cout << Canvas[i][j];
         }
         std::cout << std::endl;
     }
 }
+
+void pixelCanvas::clearCanvas() {
+    for (int i = 0; i < canvasHeight; i++) {
+        for (int j = 0; j < canvasWidth; j++) {
+            Canvas[i][j] = '.';
+        }
+    }
+}
+
+pixelCanvas& pixelCanvas::operator=(pixelCanvas const& other) {
+    this->canvasWidth = other.canvasWidth;
+    this->canvasHeight = other.canvasHeight;
+
+    for (int i = 0; i < canvasHeight; i++) {
+        this->Canvas[i] = other.Canvas[i];
+    }
+
+    return *this;
+}
+
+pixelCanvas &pixelCanvas::operator=(pixelCanvas &&other) noexcept {
+
+    if (this != &other){
+        for (int i = 0; i < canvasHeight; i++) {
+            delete[] Canvas[i];
+        }
+        delete[] Canvas;
+
+        this->canvasHeight = other.canvasHeight;
+        this->canvasWidth = other.canvasWidth;
+        this->Canvas = other.Canvas;
+
+        other.canvasHeight = 0;
+        other.canvasWidth = 0;
+        other.Canvas = nullptr;
+    }
+
+    return *this;
+}
+
+
+
+
 
