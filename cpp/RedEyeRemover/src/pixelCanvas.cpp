@@ -23,7 +23,7 @@ pixelCanvas::~pixelCanvas() {
     delete[] Canvas;
     Canvas = nullptr;
     canvasHeight = 0;
-    canvasWidth =0;
+    canvasWidth = 0;
     std::cout << "Destroyed Canvas!" << std::endl;
 }
 
@@ -41,7 +41,7 @@ pixelCanvas::pixelCanvas(const pixelCanvas &other) {
     }
 }
 
-pixelCanvas::pixelCanvas(pixelCanvas &&other)  noexcept {
+pixelCanvas::pixelCanvas(pixelCanvas &&other) noexcept {
     this->canvasHeight = other.canvasHeight;
     this->canvasWidth = other.canvasWidth;
     this->Canvas = other.Canvas;
@@ -89,12 +89,12 @@ void pixelCanvas::clearCanvas() {
     }
 }
 
-pixelCanvas& pixelCanvas::operator=(pixelCanvas const& other) {
-    this->canvasWidth = other.canvasWidth;
-    this->canvasHeight = other.canvasHeight;
+pixelCanvas &pixelCanvas::operator=(pixelCanvas const &other) {
 
-    for (int i = 0; i < canvasHeight; i++) {
-        this->Canvas[i] = other.Canvas[i];
+    if (this != &other) {
+        pixelCanvas tmp(other);
+        swap(*this, tmp);
+        std::cout << "Copied canvas" << std::endl;
     }
 
     return *this;
@@ -102,7 +102,7 @@ pixelCanvas& pixelCanvas::operator=(pixelCanvas const& other) {
 
 pixelCanvas &pixelCanvas::operator=(pixelCanvas &&other) noexcept {
 
-    if (this != &other){
+    if (this != &other) {
         for (int i = 0; i < canvasHeight; i++) {
             delete[] Canvas[i];
         }
@@ -115,10 +115,19 @@ pixelCanvas &pixelCanvas::operator=(pixelCanvas &&other) noexcept {
         other.canvasHeight = 0;
         other.canvasWidth = 0;
         other.Canvas = nullptr;
+
+        std::cout << "Moved canvas" << std::endl;
     }
 
     return *this;
 }
+
+void swap(pixelCanvas &first, pixelCanvas &second) {
+    std::swap(first.canvasWidth, second.canvasWidth);
+    std::swap(first.canvasHeight, second.canvasHeight);
+    std::swap(first.Canvas, second.Canvas);
+}
+
 
 
 

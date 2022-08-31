@@ -23,6 +23,9 @@ public:
 
     pixelCanvas(pixelCanvas&& other) noexcept ;
     pixelCanvas& operator=(pixelCanvas&& other) noexcept ;
+
+    friend void swap(pixelCanvas& first, pixelCanvas& second);
+
     ~pixelCanvas();
 
     char** getCanvas() const;
