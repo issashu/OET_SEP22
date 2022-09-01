@@ -4,9 +4,11 @@
 
 #include "RedEyeRemover/includes/PatternManipulations.h"
 #include "RedEyeRemover/includes/pixelCanvas.h"
+#include <algorithm>
+#include <iostream>
 
 #define RED_TRESHOLD 200
-
+/*TO GET PIXID ROWS*WIDTH + J + 1*/
 void PatternManipulations::FillRedPattern(const std::vector<PackedImage> &images, const int &imgNum,
                                           pixelCanvas &Canvas) {
     int pixID = 0;
@@ -37,4 +39,10 @@ pixelCanvas PatternManipulations::StringToPattern(const EyePattern &strPattern, 
     }
 
     return tmpCanvas;
+}
+
+void PatternManipulations::PatternMatching(std::string const& pattOne, std::string const& pattTwo){
+    std::size_t found = pattOne.find(pattTwo);
+    if (found!=std::string::npos)
+        std::cout << "found at: " << found << '\n';
 }

@@ -7,6 +7,7 @@
 
 //TODO Remove debug prints
 /*######### Constructors and Destructor ########*/
+
 pixelCanvas::pixelCanvas(int32_t width, int32_t height) : canvasWidth(width), canvasHeight(height) {
     Canvas = new std::vector<std::string> (canvasHeight);
     std::cout << "Created canvas" << std::endl;
@@ -40,7 +41,8 @@ pixelCanvas::pixelCanvas(pixelCanvas &&other) noexcept {
 }
 
 /*######### Other methods ####################*/
-auto* pixelCanvas::getCanvas() const {
+
+std::vector<std::string>* pixelCanvas::getCanvas() const {
     return Canvas;
 }
 

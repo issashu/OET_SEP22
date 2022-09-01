@@ -28,7 +28,7 @@ public:
 
     ~pixelCanvas();
 
-    auto* getCanvas() const;
+    std::vector<std::string>* getCanvas() const;
     int32_t getCanvasHeight() const;
     int32_t getCanvasWidth() const;
     void setCanvasElem(int32_t row, int32_t col, char element);
