@@ -1,21 +1,56 @@
 cmake_minimum_required(VERSION 3.24)
-project(Ocado_tech)
+project(Ocado_test_RER VERSION 0.5)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS NO)
 
-include_directories(cpp)
-include_directories(cpp/utils)
+#Comment out before final build or before using Valgrind (CLion specific sanitizer options) or if not using Clion IDE
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fsanitize-address-use-after-scope  -fno-omit-frame-pointer -g")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer -g")
 
-add_executable(Ocado_tech
-        cpp/utils/CommonDefines.h
-        cpp/utils/EyePatterns.h
-        cpp/utils/FileParser.h
-        cpp/utils/FunctionTracer.h
-        cpp/utils/Image.cpp
-        cpp/utils/Image.h
-        cpp/utils/SolutionEvaluator.h
-        cpp/main.cpp
-        cpp/Solution.h
-        cpp/RedEyeRemover/src/pixelCanvas.cpp cpp/RedEyeRemover/includes/pixelCanvas.h cpp/Solution.cpp cpp/RedEyeRemover/src/PatternManipulations.cpp cpp/RedEyeRemover/includes/PatternManipulations.h cpp/RedEyeRemover/src/RedEyeRemover.cpp cpp/RedEyeRemover/includes/RedEyeRemover.h)
+#Uncomment below line in order to run the Clion profiler:
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
+
+#Uncomment below for Apple Silicon setups
+#set(CMAKE_OSX_ARCHITECTURES "arm64")
+
+#Set directories below
+set(BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cpp)
+set(HEADERS_DIR ${BASE_DIR}/RedEyeRemover/includes)
+set(SOURCES_DIR ${BASE_DIR}/RedEyeRemover/src)
+set(UTILS_PATH ${BASE_DIR}/RedEyeRemover/utils)
+
+add_executable(
+        ${PROJECT_NAME}
+
+        ${BASE_DIR}/main.cpp
+        ${BASE_DIR}/Solution.cpp
+        ${BASE_DIR}/Solution.h
+
+        ${UTILS_PATH}/CommonDefines.h
+        ${UTILS_PATH}/EyePatterns.h
+        ${UTILS_PATH}/FileParser.h
+        ${UTILS_PATH}/FunctionTracer.h
+        ${UTILS_PATH}/Image.cpp
+        ${UTILS_PATH}/Image.h
+        ${UTILS_PATH}/SolutionEvaluator.h
+
+        ${SOURCES_DIR}/pixelCanvas.cpp
+        ${SOURCES_DIR}/RedEyeRemover.cpp
+        ${SOURCES_DIR}/PatternManipulations.cpp
+
+        ${HEADERS_DIR}/pixelCanvas.h
+        ${HEADERS_DIR}/PatternManipulations.h
+        ${HEADERS_DIR}/RedEyeRemover.h
+        )
+
+target_include_directories (
+        ${PROJECT_NAME}
+
+        PUBLIC
+        ${BASE_DIR}
+        ${UTILS_PATH}
+        ${SOURCES_DIR}
+        ${HEADERS_DIR}
+)
