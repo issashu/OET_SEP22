@@ -6,13 +6,13 @@
 #define OCADO_TECH_PIXELCANVAS_H
 
 #include <cstdint>
+#include <vector>
 
 class pixelCanvas {
 private:
-    //Simple C-style array of strings, since we don't modify its size and not needed all vector func.
-    char **Canvas;
-    int32_t canvasWidth;
+    std::vector<std::string>* Canvas;
     int32_t canvasHeight;
+    int32_t canvasWidth;
 
 public:
     pixelCanvas() = delete;
@@ -28,11 +28,10 @@ public:
 
     ~pixelCanvas();
 
-    char** getCanvas() const;
+    auto* getCanvas() const;
     int32_t getCanvasHeight() const;
     int32_t getCanvasWidth() const;
     void setCanvasElem(int32_t row, int32_t col, char element);
-    char getCavnasElement(int32_t row, int32_t col) const;
     void clearCanvas();
     void printCanvas();
 };
