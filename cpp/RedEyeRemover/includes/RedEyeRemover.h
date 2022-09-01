@@ -5,23 +5,26 @@
 #ifndef OCADO_TECH_REDEYEREMOVER_H
 #define OCADO_TECH_REDEYEREMOVER_H
 
-#include "utils/Image.h"
-#include "RedEyeRemover/includes/pixelCanvas.h"
+#include "Image.h"
+#include "pixelCanvas.h"
 
 class RedEyeRemover {
 private:
-    std::vector<PackedImage>& Image;
+    std::vector<PackedImage>& PixelData;
     pixelCanvas& ImagePatternCanvas;
     std::vector<pixelCanvas>* EyePatternsCanvas;
 
 public:
     RedEyeRemover() = delete;
-    RedEyeRemover(std::vector<PackedImage>& pic, pixelCanvas& imageCanvas);
+    RedEyeRemover(std::vector<PackedImage>& ImagesPixelData, pixelCanvas& ImageWorkCanvas);
     ~RedEyeRemover();
 
-    void detectRedEyeAreas(const int &imgID);
-    void setEyePatterns();
-    void printEyePatterns();
+    void SetEyePatterns();
+    void PrintEyePatterns();
+
+    void OutlineRedAreas(const int &imgID);
+    void DetectRedEyes();
+
 };
 
 

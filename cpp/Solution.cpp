@@ -2,25 +2,29 @@
 // Created by Issashu Greybeard on 31.08.22.
 //
 #include "Solution.h"
-#include "RedEyeRemover/includes/PatternManipulations.h"
-#include "RedEyeRemover/includes/RedEyeRemover.h"
-#include "RedEyeRemover/includes/pixelCanvas.h"
+#include "RedEyeRemover.h"
+#include "pixelCanvas.h"
 
 void Solution::compute([[maybe_unused]]std::vector<PackedImage> &images) {
     FunctionTracer<std::chrono::milliseconds> tracer("compute", "ms");
 
     //TODO Move the imgNum in a loop over images after manual control testing is done
+    //TODO Make sure only one pixelCanvas is used and cleaned, reused - no time for Singletons...
     int imgNum = 0;
 
-    pixelCanvas Canvas(images[imgNum].resolution.width, images[imgNum].resolution.height);
-    Canvas.clearCanvas();
+    pixelCanvas ImagePixelCanvas(images[imgNum].resolution.width, images[imgNum].resolution.height);
+    ImagePixelCanvas.clearCanvas();
 
-    RedEyeRemover RER(images, Canvas);
-    RER.detectRedEyeAreas(imgNum);
-    RER.setEyePatterns();
+    RedEyeRemover RER(images, ImagePixelCanvas);
+    RER.OutlineRedAreas(imgNum);
+    RER.SetEyePatterns();
+    RER.DetectRedEyes();
+    //RER.CleanupRedEyes();
 
     /*############# DEBUG PRINTS HERE ######################*/
-    RER.printEyePatterns();
+    //TODO Remove debug prints
+    ImagePixelCanvas.printCanvas();
+    RER.PrintEyePatterns();
     /*#####################################################*/
 }
 

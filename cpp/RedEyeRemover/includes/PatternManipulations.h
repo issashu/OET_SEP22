@@ -5,9 +5,9 @@
 #ifndef OCADO_TECH_PATTERNMANIPULATIONS_H
 #define OCADO_TECH_PATTERNMANIPULATIONS_H
 
-#include "utils/Image.h"
+#include "Image.h"
 #include "pixelCanvas.h"
-#include "utils/EyePatterns.h"
+#include "EyePatterns.h"
 
 namespace PatternManipulations {
     void FillRedPattern(const std::vector<PackedImage> &images, const int &imgNum, pixelCanvas &Canvas);

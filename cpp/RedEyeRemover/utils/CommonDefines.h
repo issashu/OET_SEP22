@@ -2,6 +2,7 @@
 #define COMMONDEFINES_H_
 
 #include <cstdint>
+#define RED_TRESHOLD 200
 
 struct Resolution {
   bool operator==(const Resolution &other) const {

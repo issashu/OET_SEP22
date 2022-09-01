@@ -2,16 +2,16 @@
 // Created by Issashu Greybeard on 1.09.22.
 //
 
-#include "RedEyeRemover/includes/RedEyeRemover.h"
-#include "utils/EyePatterns.h"
-#include "RedEyeRemover/includes/PatternManipulations.h"
+#include "RedEyeRemover.h"
+#include "EyePatterns.h"
+#include "PatternManipulations.h"
 #include <iostream>
 
 //TODO Remove debug prints
 /*######### Constructors and Destructor ########*/
 
-RedEyeRemover::RedEyeRemover(std::vector<PackedImage> &pic, pixelCanvas &imageCanvas)
-:Image(pic), ImagePatternCanvas(imageCanvas){
+RedEyeRemover::RedEyeRemover(std::vector<PackedImage> &ImagesPixelData, pixelCanvas &ImageWorkCanvas)
+: PixelData(ImagesPixelData), ImagePatternCanvas(ImageWorkCanvas){
     EyePatternsCanvas = new std::vector<pixelCanvas>;
     std::cout << "RedEyeRemover created"<< std::endl;
 }
@@ -24,7 +24,7 @@ RedEyeRemover::~RedEyeRemover() {
 
 /*######### Other methods ####################*/
 
-void RedEyeRemover::setEyePatterns() {
+void RedEyeRemover::SetEyePatterns() {
     for (int i = 0; i < EYE_PATTERNS_COUNT; i++){
         int32_t cols = EYE_PATTERN_COL_SIZE;
         int32_t rows = EYE_PATTERNS[i].size();
@@ -33,14 +33,22 @@ void RedEyeRemover::setEyePatterns() {
     }
 }
 
-void RedEyeRemover::printEyePatterns() {
+void RedEyeRemover::PrintEyePatterns() {
     for (int i = 0; i < EYE_PATTERNS_COUNT; i++){
         EyePatternsCanvas->at(i).printCanvas();
         std::cout<<std::endl;
     }
 }
 
-void RedEyeRemover::detectRedEyeAreas(const int &imgID) {
-    PatternManipulations::FillRedPattern(Image, imgID, ImagePatternCanvas);
+void RedEyeRemover::OutlineRedAreas(const int &imgID) {
+    PatternManipulations::FillRedPattern(PixelData, imgID, ImagePatternCanvas);
+}
+
+void RedEyeRemover::DetectRedEyes() {
+    //TODO Add a small 5x5 canvas to the class to use for snipping out patterns
+    for(auto & PatternRow : *ImagePatternCanvas.getCanvas()) {
+        PatternManipulations::PatternMatching(PatternRow,
+                                              EyePatternsCanvas->at(0).getCanvas()->at(0));
+    }
 }
 

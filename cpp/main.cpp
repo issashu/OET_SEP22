@@ -1,6 +1,6 @@
-#include "utils/FileParser.h"
-#include "utils/Image.h"
-#include "utils/SolutionEvaluator.h"
+#include "FileParser.h"
+#include "Image.h"
+#include "SolutionEvaluator.h"
 #include "Solution.h"
 
 

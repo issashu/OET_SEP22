@@ -2,7 +2,7 @@
 // Created by Issashu Greybeard on 30.08.22.
 //
 
-#include "RedEyeRemover/includes/pixelCanvas.h"
+#include "pixelCanvas.h"
 #include <iostream>
 
 //TODO Remove debug prints

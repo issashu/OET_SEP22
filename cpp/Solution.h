@@ -3,8 +3,8 @@
 
 #include <cstdint>
 
-#include "utils/Image.h"
-#include "utils/FunctionTracer.h"
+#include "Image.h"
+#include "FunctionTracer.h"
 
 namespace Solution {
     void compute([[maybe_unused]]std::vector<PackedImage> &images);
