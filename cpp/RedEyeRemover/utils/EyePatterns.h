@@ -40,6 +40,7 @@ constexpr EyePattern EYE_PATTERN_4 {
   "\\---/"
 };
 
+
 constexpr int32_t EYE_PATTERNS_COUNT = 4;
 constexpr std::array<EyePattern, EYE_PATTERNS_COUNT> EYE_PATTERNS {
   EYE_PATTERN_1, EYE_PATTERN_2, EYE_PATTERN_3, EYE_PATTERN_4

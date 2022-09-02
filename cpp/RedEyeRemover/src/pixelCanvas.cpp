@@ -10,7 +10,7 @@
 
 pixelCanvas::pixelCanvas(int32_t width, int32_t height) : canvasWidth(width), canvasHeight(height) {
     Canvas = new std::vector<std::string> (canvasHeight);
-    std::cout << "Created canvas" << std::endl;
+    //std::cout << "Created canvas" << std::endl;
 }
 
 pixelCanvas::~pixelCanvas() {
@@ -18,7 +18,7 @@ pixelCanvas::~pixelCanvas() {
     Canvas = nullptr;
     canvasHeight = 0;
     canvasWidth = 0;
-    std::cout << "Destroyed Canvas!" << std::endl;
+    //std::cout << "Destroyed Canvas!" << std::endl;
 }
 
 pixelCanvas::pixelCanvas(const pixelCanvas &other) {
@@ -76,7 +76,7 @@ pixelCanvas &pixelCanvas::operator=(pixelCanvas const &other) {
     if (this != &other) {
         pixelCanvas tmp(other);
         swap(*this, tmp);
-        std::cout << "Copied canvas" << std::endl;
+        //std::cout << "Copied canvas" << std::endl;
     }
 
     return *this;
@@ -95,7 +95,7 @@ pixelCanvas &pixelCanvas::operator=(pixelCanvas &&other) noexcept {
         other.canvasWidth = 0;
         other.Canvas = nullptr;
 
-        std::cout << "Moved canvas" << std::endl;
+        //std::cout << "Moved canvas" << std::endl;
     }
 
     return *this;

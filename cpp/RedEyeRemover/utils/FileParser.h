@@ -28,7 +28,7 @@ public:
     FunctionTracer<std::chrono::milliseconds> tracer("generateData",
         "ms //not included into solution timings");
     //TODO Change the absolute path to something more civilised once app works
-    constexpr auto inputFile = "/Users/issashu/Library/Mobile Documents/com~apple~CloudDocs/Coding/Ocado_tech/test_input/small_test_data/input.bin";
+    constexpr auto inputFile = "/Users/issashu/Library/Mobile Documents/com~apple~CloudDocs/Coding/Ocado_tech/test_input/big_test_case/input.bin";
     int32_t err = FileParser<T>::parseFile(inputFile, outInputData);
     if (EXIT_SUCCESS != err) {
       std::cerr << "FileParser::parseFile() failed for file: " << inputFile
@@ -37,7 +37,7 @@ public:
     }
 
     //TODO Change the absolute path to something more civilised once app works
-    constexpr auto outputFile = "/Users/issashu/Library/Mobile Documents/com~apple~CloudDocs/Coding/Ocado_tech/test_input/small_test_data/output.bin";
+    constexpr auto outputFile = "/Users/issashu/Library/Mobile Documents/com~apple~CloudDocs/Coding/Ocado_tech/test_input/big_test_case/output.bin";
     err = FileParser<T>::parseFile(outputFile, outOutputData);
     if (EXIT_SUCCESS != err) {
       std::cerr << "FileWritter::generateFile() failed for file: " << inputFile

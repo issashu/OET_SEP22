@@ -3,7 +3,6 @@
 #include "SolutionEvaluator.h"
 #include "Solution.h"
 
-
 int32_t main([[maybe_unused]]int32_t argc, [[maybe_unused]]char *argv[]) {
   //Use the provided implementation that best suits your needs
   using Image = PackedImage;
@@ -17,7 +16,6 @@ int32_t main([[maybe_unused]]int32_t argc, [[maybe_unused]]char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  //Solution solution;
   Solution::compute(inputImages);
 
   err = SolutionEvaluator<Image>::compare(inputImages, outputImages);

@@ -4,7 +4,6 @@
 
 #include "RedEyeRemover.h"
 #include "EyePatterns.h"
-#include "PatternManipulations.h"
 #include <iostream>
 
 //TODO Remove debug prints
@@ -15,7 +14,7 @@ RedEyeRemover::RedEyeRemover(std::vector<PackedImage> &ImagesPixelData, pixelCan
 
     WorkingCanvas = nullptr;
     EyePatternsCanvas = new std::vector<pixelCanvas>;
-    std::cout << "RedEyeRemover created" << std::endl;
+    //std::cout << "RedEyeRemover created" << std::endl;
 }
 
 RedEyeRemover::~RedEyeRemover() {
@@ -24,7 +23,7 @@ RedEyeRemover::~RedEyeRemover() {
 
     WorkingCanvas = nullptr;
     EyePatternsCanvas = nullptr;
-    std::cout << "RedEyeRemover destroyed!" << std::endl;
+    //std::cout << "RedEyeRemover destroyed!" << std::endl;
 }
 
 /*######### Other methods ####################*/
@@ -41,7 +40,7 @@ void RedEyeRemover::SetEyePatterns() {
 void RedEyeRemover::PrintEyePatterns() {
     for (int i = 0; i < EYE_PATTERNS_COUNT; i++) {
         EyePatternsCanvas->at(i).printCanvas();
-        std::cout << std::endl;
+        std::cout << "\n";
     }
 }
 
@@ -49,20 +48,22 @@ void RedEyeRemover::OutlineRedAreas(const int &imgID) {
     PatternManipulations::FillRedPattern(PixelData, imgID, ImagePatternCanvas);
 }
 
-void RedEyeRemover::DetectRedEyes() {
+void RedEyeRemover::DetectRedEyes(const int &imgID) {
     //TODO Replace range based loop with traditional C style loop. Having separate counter is plain stupid and ugly
     size_t PatternStartPos = 0;
     int32_t counter = 0;
-    bool isAnyPatternMatching = false;
+    PatternLimits WorkLimits;
 
     auto tmpCanvas = ImagePatternCanvas.getCanvas();
     auto tmpPattern = EyePatternsCanvas->begin()->getCanvas();
 
     for (auto element = std::begin(*tmpCanvas); element != std::end(*tmpCanvas); element++, counter++) {
+
         PatternStartPos = PatternManipulations::PatternMatching(*element, tmpPattern->front());
 
         if (PatternStartPos <= ImagePatternCanvas.getCanvasWidth()) {
-        //If first pattern row is found, grab image portion and loop over the patterns, since they are small
+
+            //If first pattern row is found, grab image portion and loop over the patterns, since they are small
             for (const auto &pattern: *EyePatternsCanvas) {
                 int32_t PatternWidth = pattern.getCanvasWidth();
                 int32_t PatternHeight = pattern.getCanvasHeight();
@@ -74,31 +75,38 @@ void RedEyeRemover::DetectRedEyes() {
                         WorkingCanvas->setCanvasElem(i,j,tmpCanvas->at(counter+i)[PatternStartPos+j]);
                     }
                 }
+                //Set working limitations for cleaner
+                WorkLimits.SetPatternLimits(counter, PatternStartPos, counter+WorkingCanvas->getCanvasHeight(),
+                                            PatternStartPos+WorkingCanvas->getCanvasWidth() );
+
                 //Compare with pattern
                 if (*WorkingCanvas == pattern) {
                     //Call RemoveredEye here
-                    RemoveRedEye(counter, PatternStartPos);
-                    std::cout << "Bla";
+                    RemoveRedEye(WorkLimits, imgID);
                     delete WorkingCanvas;
+                    WorkingCanvas= nullptr;
                     break;
                 }
                 delete WorkingCanvas;
+                WorkingCanvas= nullptr;
             }
-            //After wiping return to same row to check for potential second image
+            PatternManipulations::ClearFalsePattern(WorkLimits, ImagePatternCanvas);
+            //After wiping true or false pattern return to same row to check for potential second image
             element--;
             counter--;
         }
     }
 }
-// Row = counter, col = PatternPos
-void RedEyeRemover::RemoveRedEye(int32_t row, int32_t col) {
+//Row = counter, col = PatternPos
+//TO GET PIXEL ID ROWS*WIDTH + J
+void RedEyeRemover::RemoveRedEye(PatternLimits const& WL, const int &imgID) {
     int64_t pixID = 0;
-    for(int32_t i = row; i<(row+WorkingCanvas->getCanvasHeight()); i++){
-        for(int32_t j = col; j<(col+WorkingCanvas->getCanvasWidth()); j++){
-            if(ImagePatternCanvas.getCanvas()->at(i)[j]=='*'){
-                pixID = i * ImagePatternCanvas.getCanvasWidth() + j;
+    for(int32_t i = WL.StartRow ; i < WL.RowLimit; i++) {
+        for(int32_t j = WL.StartCol; j < WL.ColLimit; j++) {
+            if(ImagePatternCanvas.getCanvas()->at(i)[j]=='*') {
+                pixID = i * ImagePatternCanvas.getCanvasWidth() + j;//26
                 ImagePatternCanvas.setCanvasElem(i, j, '.');
-                PixelData.at(0).pixels.at(pixID).red-=150;
+                PixelData.at(imgID).pixels.at(pixID).red-=150;
             }
         }
     }

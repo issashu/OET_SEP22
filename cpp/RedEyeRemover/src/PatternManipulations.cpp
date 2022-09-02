@@ -5,9 +5,7 @@
 #include "PatternManipulations.h"
 #include "pixelCanvas.h"
 #include <algorithm>
-#include <iostream>
 
-/*TO GET PIXID ROWS*WIDTH + J + 1*/
 void PatternManipulations::FillRedPattern(const std::vector<PackedImage> &images, const int &imgNum,
                                           pixelCanvas &Canvas) {
     int pixelID = 0;
@@ -40,38 +38,22 @@ pixelCanvas PatternManipulations::StringToPattern(const EyePattern &strPattern, 
 
 size_t PatternManipulations::PatternMatching(std::string const& pattOne, std::string const& pattTwo){
     size_t found = pattOne.find(pattTwo);
-    if (found!=std::string::npos){
-        std::cout << "found at: " << found << '\n';
-
-    }
-
     return found;
 }
 
-
-/*
- auto it = std::find( vrecords.begin(), vrecords.end(), "Buy" );
-
-if ( it != vrecords.end() )
-{
-    std::cout << "Word \"" << "Buy"
-              << "\" is found at position "
-              << std::distance( vrecords.begin(), it )
-              << std::endl;
+void PatternManipulations::ClearFalsePattern(PatternLimits const& Limits, pixelCanvas& ImagePatternCanvas) {
+    for(int32_t i = Limits.StartRow; i < Limits.RowLimit; i++){
+        for(int32_t j = Limits.StartCol; j < Limits.ColLimit; j++){
+            if(ImagePatternCanvas.getCanvas()->at(i)[j]=='*'){
+                ImagePatternCanvas.setCanvasElem(i, j, '.');
+            }
+        }
+    }
 }
- */
 
-/*
-const char * s[] = { "Buy", "Sell" };
-
-auto it = std::find_first_of( vrecords.begin(), vrecords.end(),
-                              std::begin( s ), std::end( s ) );
-
-if ( it != vrecords.end() )
-{
-    std::cout << "One of the words \"" << "Buy and Sell"
-              << "\" is found at position "
-              << std::distance( vrecords.begin(), it )
-              << std::endl;
+void PatternLimits::SetPatternLimits(int32_t row, int32_t col, int32_t rowlim, int32_t collim) {
+    StartRow = row;
+    StartCol = col;
+    RowLimit = rowlim;
+    ColLimit = collim;
 }
-*/

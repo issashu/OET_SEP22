@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.24)
-project(Ocado_test_RER VERSION 0.5)
+cmake_minimum_required(VERSION 3.22)
+project(Ocado_test_RER VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)

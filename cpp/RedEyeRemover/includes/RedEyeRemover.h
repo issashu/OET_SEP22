@@ -7,6 +7,7 @@
 
 #include "Image.h"
 #include "pixelCanvas.h"
+#include "PatternManipulations.h"
 
 class RedEyeRemover {
 private:
@@ -24,8 +25,8 @@ public:
     void PrintEyePatterns();
 
     void OutlineRedAreas(const int &imgID);
-    void DetectRedEyes();
-    void RemoveRedEye(int32_t row, int32_t col);
+    void DetectRedEyes(const int &imgID);
+    void RemoveRedEye(PatternLimits const& WL, const int &imgID);
 
 };
 
