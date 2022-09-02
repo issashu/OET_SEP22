@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS NO)
 
 #Comment out before final build or before using Valgrind (CLion specific sanitizer options) or if not using Clion IDE
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fsanitize-address-use-after-scope  -fno-omit-frame-pointer -g")
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer -g")
+#set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fsanitize-address-use-after-scope  -fno-omit-frame-pointer -g")
+#set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer -g")
 
 #Uncomment below line in order to run the Clion profiler:
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
