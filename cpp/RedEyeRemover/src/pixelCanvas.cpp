@@ -5,12 +5,12 @@
 #include "pixelCanvas.h"
 #include <iostream>
 
-//TODO Remove debug prints
+#define WHITESPACE  '.'
+
 /*######### Constructors and Destructor ########*/
 
 pixelCanvas::pixelCanvas(int32_t width, int32_t height) : canvasWidth(width), canvasHeight(height) {
     Canvas = new std::vector<std::string> (canvasHeight);
-    //std::cout << "Created canvas" << std::endl;
 }
 
 pixelCanvas::~pixelCanvas() {
@@ -18,7 +18,6 @@ pixelCanvas::~pixelCanvas() {
     Canvas = nullptr;
     canvasHeight = 0;
     canvasWidth = 0;
-    //std::cout << "Destroyed Canvas!" << std::endl;
 }
 
 pixelCanvas::pixelCanvas(const pixelCanvas &other) {
@@ -35,9 +34,9 @@ pixelCanvas::pixelCanvas(pixelCanvas &&other) noexcept {
     this->canvasWidth = other.canvasWidth;
     this->Canvas = other.Canvas;
 
+    other.Canvas = nullptr;
     other.canvasHeight = 0;
     other.canvasWidth = 0;
-    other.Canvas = nullptr;
 }
 
 /*######### Other methods ####################*/
@@ -67,7 +66,7 @@ void pixelCanvas::printCanvas() {
 
 void pixelCanvas::clearCanvas() {
     for (int i = 0; i < canvasHeight; i++) {
-        Canvas->at(i).replace(0, canvasWidth, canvasWidth, '.') ;
+        Canvas->at(i).replace(0, canvasWidth, canvasWidth, WHITESPACE) ;
     }
 }
 
@@ -76,7 +75,6 @@ pixelCanvas &pixelCanvas::operator=(pixelCanvas const &other) {
     if (this != &other) {
         pixelCanvas tmp(other);
         swap(*this, tmp);
-        //std::cout << "Copied canvas" << std::endl;
     }
 
     return *this;
@@ -94,8 +92,6 @@ pixelCanvas &pixelCanvas::operator=(pixelCanvas &&other) noexcept {
         other.canvasHeight = 0;
         other.canvasWidth = 0;
         other.Canvas = nullptr;
-
-        //std::cout << "Moved canvas" << std::endl;
     }
 
     return *this;
@@ -108,7 +104,7 @@ void swap(pixelCanvas &first, pixelCanvas &second) {
 }
 
 bool pixelCanvas::operator==(pixelCanvas const& other) {
-    //Not comparing sizes since vectors can't be equal,if size varies
+
     auto tmp1 = this->getCanvas();
     auto tmp2 = other.getCanvas();
     if(*tmp1 == *tmp2){
@@ -117,9 +113,3 @@ bool pixelCanvas::operator==(pixelCanvas const& other) {
 
     return false;
 }
-
-
-
-
-
-

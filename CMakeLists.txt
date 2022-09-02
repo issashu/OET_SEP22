@@ -20,6 +20,7 @@ set(BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cpp)
 set(HEADERS_DIR ${BASE_DIR}/RedEyeRemover/includes)
 set(SOURCES_DIR ${BASE_DIR}/RedEyeRemover/src)
 set(UTILS_PATH ${BASE_DIR}/RedEyeRemover/utils)
+set(TEST_CASES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/test_input/)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(
@@ -54,4 +55,11 @@ target_include_directories (
         ${UTILS_PATH}
         ${SOURCES_DIR}
         ${HEADERS_DIR}
+        ${TEST_CASES_PATH}
+)
+
+target_compile_definitions(
+        ${PROJECT_NAME}
+        PUBLIC
+        TEST_CASES_PATH="${TEST_CASES_PATH}"
 )

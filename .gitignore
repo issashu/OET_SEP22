@@ -1,6 +1,2 @@
-/build/
 /cmake-build-debug/
 /CMakeFiles/
-/test_input/
-/test_input/small_test_data/
-/test_input/big_test_case/

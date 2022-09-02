@@ -6,7 +6,6 @@
 #include "EyePatterns.h"
 #include <iostream>
 
-//TODO Remove debug prints
 /*######### Constructors and Destructor ########*/
 
 RedEyeRemover::RedEyeRemover(std::vector<PackedImage> &ImagesPixelData, pixelCanvas &ImageWorkCanvas)
@@ -14,7 +13,6 @@ RedEyeRemover::RedEyeRemover(std::vector<PackedImage> &ImagesPixelData, pixelCan
 
     WorkingCanvas = nullptr;
     EyePatternsCanvas = new std::vector<pixelCanvas>;
-    //std::cout << "RedEyeRemover created" << std::endl;
 }
 
 RedEyeRemover::~RedEyeRemover() {
@@ -23,7 +21,6 @@ RedEyeRemover::~RedEyeRemover() {
 
     WorkingCanvas = nullptr;
     EyePatternsCanvas = nullptr;
-    //std::cout << "RedEyeRemover destroyed!" << std::endl;
 }
 
 /*######### Other methods ####################*/
@@ -49,7 +46,6 @@ void RedEyeRemover::OutlineRedAreas(const int &imgID) {
 }
 
 void RedEyeRemover::DetectRedEyes(const int &imgID) {
-    //TODO Replace range based loop with traditional C style loop. Having separate counter is plain stupid and ugly
     size_t PatternStartPos = 0;
     int32_t counter = 0;
     PatternLimits WorkLimits;
@@ -75,13 +71,13 @@ void RedEyeRemover::DetectRedEyes(const int &imgID) {
                         WorkingCanvas->setCanvasElem(i,j,tmpCanvas->at(counter+i)[PatternStartPos+j]);
                     }
                 }
+
                 //Set working limitations for cleaner
                 WorkLimits.SetPatternLimits(counter, PatternStartPos, counter+WorkingCanvas->getCanvasHeight(),
                                             PatternStartPos+WorkingCanvas->getCanvasWidth() );
 
-                //Compare with pattern
+                //Compare with pattern and remove if equal
                 if (*WorkingCanvas == pattern) {
-                    //Call RemoveredEye here
                     RemoveRedEye(WorkLimits, imgID);
                     delete WorkingCanvas;
                     WorkingCanvas= nullptr;
@@ -91,7 +87,8 @@ void RedEyeRemover::DetectRedEyes(const int &imgID) {
                 WorkingCanvas= nullptr;
             }
             PatternManipulations::ClearFalsePattern(WorkLimits, ImagePatternCanvas);
-            //After wiping true or false pattern return to same row to check for potential second image
+
+            //After wiping the pattern from the canvas return to same row to check for potential second image on same row
             element--;
             counter--;
         }
@@ -103,9 +100,9 @@ void RedEyeRemover::RemoveRedEye(PatternLimits const& WL, const int &imgID) {
     int64_t pixID = 0;
     for(int32_t i = WL.StartRow ; i < WL.RowLimit; i++) {
         for(int32_t j = WL.StartCol; j < WL.ColLimit; j++) {
-            if(ImagePatternCanvas.getCanvas()->at(i)[j]=='*') {
-                pixID = i * ImagePatternCanvas.getCanvasWidth() + j;//26
-                ImagePatternCanvas.setCanvasElem(i, j, '.');
+            if(ImagePatternCanvas.getCanvas()->at(i)[j] == RED_PIXEL) {
+                pixID = i * ImagePatternCanvas.getCanvasWidth() + j;
+                ImagePatternCanvas.setCanvasElem(i, j, WHITESPACE);
                 PixelData.at(imgID).pixels.at(pixID).red-=150;
             }
         }

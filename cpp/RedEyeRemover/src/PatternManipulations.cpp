@@ -15,7 +15,7 @@ void PatternManipulations::FillRedPattern(const std::vector<PackedImage> &images
     for (int i = 0; i < canvasH; i++) {
         for (int j = 0; j < canvasW; j++) {
             if (images[imgNum].pixels[pixelID++].red >= RED_TRESHOLD) {
-                Canvas.setCanvasElem(i, j, '*');
+                Canvas.setCanvasElem(i, j, RED_PIXEL);
             }
         }
     }
@@ -28,7 +28,7 @@ pixelCanvas PatternManipulations::StringToPattern(const EyePattern &strPattern, 
     for (int row = 0; row < row_count; row++){
         for (int col = 0; col < row_width; col++) {
             if(strPattern[row][col] != ' '){
-                tmpCanvas.setCanvasElem(row, col, '*');
+                tmpCanvas.setCanvasElem(row, col, RED_PIXEL);
             }
         }
     }
@@ -44,8 +44,8 @@ size_t PatternManipulations::PatternMatching(std::string const& pattOne, std::st
 void PatternManipulations::ClearFalsePattern(PatternLimits const& Limits, pixelCanvas& ImagePatternCanvas) {
     for(int32_t i = Limits.StartRow; i < Limits.RowLimit; i++){
         for(int32_t j = Limits.StartCol; j < Limits.ColLimit; j++){
-            if(ImagePatternCanvas.getCanvas()->at(i)[j]=='*'){
-                ImagePatternCanvas.setCanvasElem(i, j, '.');
+            if(ImagePatternCanvas.getCanvas()->at(i)[j]==RED_PIXEL){
+                ImagePatternCanvas.setCanvasElem(i, j, WHITESPACE);
             }
         }
     }

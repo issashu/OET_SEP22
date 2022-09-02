@@ -9,6 +9,9 @@
 #include "pixelCanvas.h"
 #include "EyePatterns.h"
 
+#define RED_PIXEL '*'
+#define WHITESPACE  '.'
+
 struct PatternLimits{
     int32_t StartRow {0};
     int32_t StartCol {0};
