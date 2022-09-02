@@ -107,6 +107,17 @@ void swap(pixelCanvas &first, pixelCanvas &second) {
     std::swap(first.Canvas, second.Canvas);
 }
 
+bool pixelCanvas::operator==(pixelCanvas const& other) {
+    //Not comparing sizes since vectors can't be equal,if size varies
+    auto tmp1 = this->getCanvas();
+    auto tmp2 = other.getCanvas();
+    if(*tmp1 == *tmp2){
+        return true;
+    }
+
+    return false;
+}
+
 
 
 

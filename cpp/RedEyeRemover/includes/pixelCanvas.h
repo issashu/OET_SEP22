@@ -24,6 +24,7 @@ public:
     pixelCanvas(pixelCanvas&& other) noexcept ;
     pixelCanvas& operator=(pixelCanvas&& other) noexcept ;
 
+    bool operator==(pixelCanvas const& other);
     friend void swap(pixelCanvas& first, pixelCanvas& second);
 
     ~pixelCanvas();

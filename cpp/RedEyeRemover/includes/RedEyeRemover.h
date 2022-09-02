@@ -10,8 +10,9 @@
 
 class RedEyeRemover {
 private:
-    std::vector<PackedImage>& PixelData;
+    pixelCanvas* WorkingCanvas;
     pixelCanvas& ImagePatternCanvas;
+    std::vector<PackedImage>& PixelData;
     std::vector<pixelCanvas>* EyePatternsCanvas;
 
 public:
@@ -24,6 +25,7 @@ public:
 
     void OutlineRedAreas(const int &imgID);
     void DetectRedEyes();
+    void RemoveRedEye(int32_t row, int32_t col);
 
 };
 

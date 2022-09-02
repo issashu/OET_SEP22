@@ -27,7 +27,7 @@ public:
                               std::vector<T> &outOutputData) {
     FunctionTracer<std::chrono::milliseconds> tracer("generateData",
         "ms //not included into solution timings");
-    //TODO: Change the absolute path to something more civilised once app works
+    //TODO Change the absolute path to something more civilised once app works
     constexpr auto inputFile = "/Users/issashu/Library/Mobile Documents/com~apple~CloudDocs/Coding/Ocado_tech/test_input/small_test_data/input.bin";
     int32_t err = FileParser<T>::parseFile(inputFile, outInputData);
     if (EXIT_SUCCESS != err) {
@@ -36,7 +36,7 @@ public:
       return EXIT_FAILURE;
     }
 
-    //TODO: Change the absolute path to something more civilised once app works
+    //TODO Change the absolute path to something more civilised once app works
     constexpr auto outputFile = "/Users/issashu/Library/Mobile Documents/com~apple~CloudDocs/Coding/Ocado_tech/test_input/small_test_data/output.bin";
     err = FileParser<T>::parseFile(outputFile, outOutputData);
     if (EXIT_SUCCESS != err) {

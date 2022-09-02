@@ -38,11 +38,14 @@ pixelCanvas PatternManipulations::StringToPattern(const EyePattern &strPattern, 
     return tmpCanvas;
 }
 
-void PatternManipulations::PatternMatching(std::string const& pattOne, std::string const& pattTwo){
-    std::size_t found = pattOne.find(pattTwo);
+size_t PatternManipulations::PatternMatching(std::string const& pattOne, std::string const& pattTwo){
+    size_t found = pattOne.find(pattTwo);
     if (found!=std::string::npos){
         std::cout << "found at: " << found << '\n';
+
     }
+
+    return found;
 }
 
 
