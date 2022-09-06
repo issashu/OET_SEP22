@@ -37,6 +37,8 @@ add_executable(
         ${UTILS_PATH}/Image.cpp
         ${UTILS_PATH}/Image.h
         ${UTILS_PATH}/SolutionEvaluator.h
+        ${UTILS_PATH}/GlobalOverloads.cpp
+        ${UTILS_PATH}/GlobalOverloads.h
 
         ${SOURCES_DIR}/pixelCanvas.cpp
         ${SOURCES_DIR}/RedEyeRemover.cpp

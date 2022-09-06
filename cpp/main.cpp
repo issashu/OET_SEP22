@@ -18,6 +18,7 @@ int32_t main([[maybe_unused]]int32_t argc, [[maybe_unused]]char *argv[]) {
 
   Solution::compute(inputImages);
 
+
   err = SolutionEvaluator<Image>::compare(inputImages, outputImages);
   if (EXIT_SUCCESS != err) {
     std::cout << "Solution status - [FAIL]" << std::endl;
